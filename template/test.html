@@ -1,0 +1,151 @@
+<div class="row">
+<div class="col-9" style="padding-left: 0; padding-right: 0; padding-top: 12px; padding-bottom: 50px">
+    <div class="col-12 row article-detail">
+        <!--标题-->
+        <div class="col-9 title">
+        可卡犬的前世今生——从不被认可到风靡全球
+        </div>
+
+        <div class="col-3 favorite" id="delete">
+            <label class="likeButton" onclick="handleRecommend('45')" value="flag"><img src="/img/thumb.svg" width="32" height="22">推荐本文</label>
+            <label class="likeButton" onclick="handleDelete('45')" value="flag"><img src="/img/delete.svg" width="32" height="22">删除本文</label>
+        </div>
+
+
+        <!--文章信息-->
+        <div class="col-12 info">
+            作者:sqw
+            &nbsp;&nbsp;&nbsp;类别:宠物杂谈&nbsp;&nbsp;&nbsp;
+            日期:2021-04-30&nbsp;&nbsp;&nbsp;
+            阅读:32&nbsp;
+            收藏:0&nbsp;
+        </div>
+
+        <div class="col-12" id="content">
+             <p style="margin-top: 0px; margin-bottom: 1.4em; color: rgb(18, 18, 18); font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 15px; white-space: normal; background-color: rgb(255, 255, 255);"><span style="font-weight: 600 !important;">一、可卡犬介绍</span></p><p style="margin-top: 1.4em; margin-bottom: 1.4em; color: rgb(18, 18, 18); font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 15px; white-space: normal; background-color: rgb(255, 255, 255);">可卡犬其实有两种，英国可卡犬和美国可卡犬。</p><p style="margin-top: 1.4em; margin-bottom: 1.4em; color: rgb(18, 18, 18); font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 15px; white-space: normal; background-color: rgb(255, 255, 255);">一提到可卡犬，我们就会联想到TA标志的下垂波浪式大耳朵，还有就是小时候看过的迪士尼动画，《小姐与流浪汉》中的女主角“淑女丽迪”。</p><p style="margin-top: 1.4em; margin-bottom: 1.4em; color: rgb(18, 18, 18); font-family: -apple-system, BlinkMacSystemFont, &quot;Helvetica Neue&quot;, &quot;PingFang SC&quot;, &quot;Microsoft YaHei&quot;, &quot;Source Han Sans SC&quot;, &quot;Noto Sans CJK SC&quot;, &quot;WenQuanYi Micro Hei&quot;, sans-serif; font-size: 15px; white-space: normal; background-color: rgb(255, 255, 255);"><span style="font-weight: 600 !important;">二、可卡犬起源</span></p><p style="margin-top: 1.4em; margin-bottom: 1.4em; color: rgb(18, 18, 18); font-family: -apple-system, BlinkMacSystemFont, &quot
+        </div>
+
+                <!--阅读全文按钮-->
+
+
+    </div>
+        <!--文章页脚-->
+    <div class="col-12 article-nav">
+        <div>文章作者: sqw</div>
+        <div>
+            上一篇：
+            <a href="/article/45">可卡犬的前世今生——从不被认可到风靡全球</a>
+        </div>
+        <div>
+            下一篇：
+            <a href="/article/44">养史宾格的注意事项？和体验？</a>
+        </div>
+    </div>
+
+
+    <!--评论-->
+    <div class="col-12 article-comment" style="padding-bottom: 20px">
+        <div class="col-12 row" style="height: 68px; line-height: 68px">
+            <div class="col-1" style="padding-right: 0px; margin-right: 0px; padding-left: 0px; margin-left: 0px;">
+                <label for="nickname">你的昵称:</label>
+            </div>
+            <div class="col-11" style="padding-left: 0px">
+                <input type="text" id="nickname" class="form-control" style="margin: 15px 0" value="admin" readonly>
+            </div>
+        </div>
+
+        <div class="col-12 row" >
+            <div class="col-1" style="padding-right: 0px; margin-right: 0px; padding-left: 0px; margin-left: 0px;">
+                <label for="comment" style="padding-top: 0px">你的评论:</label>
+            </div>
+            <div class="col-11" style="padding-left: 0px">
+                <input type="text" id="comment" class="form-control" style="height: 100px; margin-bottom: 20px;">
+            </div>
+        </div>
+
+        <div class="col-12 row" style="margin-bottom: 20px">
+            <div class="col-12 row" >
+                <div class="col-2" style="padding-left: 0px">
+                    <button class="btn btn-primary" onclick="addComment('45')">发表评论</button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!--侧边栏-->
+<div class="col-3" style="border: none; padding-right: 0px;">
+    <!--推荐栏部分 -->
+    <div class="side">
+        <div class="col-12 tip">文章分类</div>
+        <ul class="list-group" style="padding-left: 0px">
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/1-1">养宠日志</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/2-1">喂养经验</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/3-1">驯养经验</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/4-1">宠物杂谈</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/5-1">讨论与提问</a></li>
+
+        </ul>
+
+    </div>
+
+    <div class="side">
+        <div class="col-12 tip">最多收藏</div>
+        <ul>
+
+            <li><a href="/article/8">1.sssssssssssssss...</a></li>
+
+            <li><a href="/article/9">2.2af</a></li>
+
+            <li><a href="/article/1">3.养宠心得</a></li>
+
+            <li><a href="/article/2">4.养宠心得</a></li>
+
+            <li><a href="/article/3">5.养宠心得</a></li>
+
+            <li><a href="/article/4">6.养宠心得</a></li>
+
+            <li><a href="/article/5">7.养宠心得</a></li>
+
+            <li><a href="/article/10">8.aaaaaaaaaaaaaaa</a></li>
+
+            <li><a href="/article/16">9.审核测试！！</a></li>
+
+        </ul>
+    </div>
+
+    <div class="side">
+        <div class="col-12 tip">最多阅读</div>
+        <ul>
+
+            <li><a href="/article/8">1.sssssssssssssss...</a></li>
+
+            <li><a href="/article/9">2.2af</a></li>
+
+            <li><a href="/article/10">3.aaaaaaaaaaaaaaa</a></li>
+
+            <li><a href="/article/16">4.审核测试！！</a></li>
+
+            <li><a href="/article/19">5.管理员文章测试</a></li>
+
+            <li><a href="/article/1">6.养宠心得</a></li>
+
+            <li><a href="/article/5">7.养宠心得</a></li>
+
+            <li><a href="/article/45">8.可卡犬的前世今生——从不被认可到风靡全球</a></li>
+
+            <li><a href="/article/3">9.养宠心得</a></li>
+
+        </ul>
+    </div>
+
+</div>
+</div>

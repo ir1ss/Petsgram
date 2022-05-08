@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Petsgram</title>
+    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link href="/font/css/open-iconic-bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/ue/dist/utf8-php/ueditor.config.js"></script>
+    <script type="text/javascript" src="/ue/dist/utf8-php/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="/js/petsgram.js"></script>
+    <script type="text/javascript" src="/js/vue.js"></script>
+</head>
+<body>
+    <!--首部-->
+    <div class="container-fluid" style="height: 102px; border-bottom: solid 1px #cbd3da; background-color: white">
+        <div class="row">
+            <div class="col-1"></div>
+
+            <!--logo-->
+            <div class="col-4">
+                <a href="/"><img src="/img/logo.png" width="140px" height="100px"></a>
+            </div>
+
+            <!--搜索-->
+            <div class="col-3" style="padding-top: 20px">
+                <nav class="navbar navbar-light">
+                    <form class="form-inline" onkeypress="return event.keyCode != 13;">
+                        <input id="keyword" class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search" onkeyup="doSearch(event)">
+                        <a href="#" id="searchArt"><button class="btn btn-outline-success my-2 my-sm-0" style="color: black; border-color: black;" type="button" onclick="doSearch(null)">搜索</button></a>
+                    </form>
+                </nav>
+            </div>
+
+            <!--导航-->
+            <div class="col-4">
+                <div class="row">
+                    <nav class="navbar navbar-light" style="padding-top: 22px">
+                      <a class="navbar-brand" href="/" title="首页">
+                        <img src="/img/homee.svg" width="30" height="30" alt="">
+                      </a>
+                    </nav>
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px">
+                      <a class="navbar-brand" href="/classification" title="宠物识别">
+                        <img src="/img/camera.svg" width="30" height="30" alt="">
+                      </a>
+                    </nav>
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px">
+                      <a class="navbar-brand" href="/write" title="发布文章">
+                        <img src="/img/write.svg" width="30" height="30" alt="">
+                      </a>
+                    </nav>
+
+<!--                    <nav class="navbar navbar-light" style="padding-top: 22px">-->
+<!--                      <a class="navbar-brand" href="/shop" title="交易">-->
+<!--                        <img src="/img/shop.svg" width="30" height="30" alt="">-->
+<!--                      </a>-->
+<!--                    </nav>-->
+
+<!--                    <nav class="navbar navbar-light" style="padding-top: 22px">-->
+<!--                      <a class="navbar-brand" href="/notification" title="消息">-->
+<!--                        <img src="/img/bell.svg" width="30" height="30" alt="">-->
+<!--                      </a>-->
+<!--                    </nav>-->
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px" title="个人主页">
+                        {% if userRole == 'user' %}
+                        <a class="navbar-brand" href="/userpage">
+                        <img src="/img/user.svg" width="30" height="30" alt="">
+                        </a>
+                        {% else %}
+                        <a class="navbar-brand" href="/userpage/myArticles">
+                        <img src="/img/user.svg" width="30" height="30" alt="">
+                        </a>
+                        {% endif %}
+                    </nav>
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px"  id="logout" title="退出">
+                      <a class="navbar-brand" href="#" onclick="handleLogOut()">
+                        <img src="/img/door.svg" width="30" height="30" alt="" >
+                      </a>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--正文部分 -->
+    <div class="container">
+        <div class="row">
+            {% block content %}
+
+            {% endblock %}
+
+        </div>
+
+    </div>
+
+    <!--页脚 -->
+    <div class="container-fluid" style="height: 100px; border-top: solid 1px #b9bbbe; background-color: white">
+        <p style="color: #586069">@2021 Qiwei Sun</p>
+    </div>
+
+<script type="text/javascript">
+    function doSearch(e) {
+        if(e != null && e.keyCode != 13) return false;
+        let keyword = $.trim($("#keyword").val());
+        if(keyword == "" || keyword.length > 20 || keyword.indexOf('%') >= 0){
+          bootbox.alert({'title' : '错误提示', 'message' : "输入无效，请重新输入"});
+          $('#keyword').val('');
+          $('#keyword').focus();
+        } else location.href = '/search/1-' + keyword;
+    }
+
+    function handleLogOut() {
+        bootbox.confirm({
+            buttons: {
+                confirm: {
+                    label: "确定"
+                },
+                cancel: {
+                    label: "取消"
+                }
+            },
+            title:"提示",
+            message:"你确定要退出吗？",
+            callback: function (result){
+                if(result) location.href = '/logout';
+            }
+        });
+    }
+</script>
+</body>
+</html>

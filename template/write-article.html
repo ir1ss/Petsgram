@@ -1,0 +1,161 @@
+{% extends 'base.html' %}
+{% block content %}
+    <div class="container" style="padding-bottom: 30px; min-height: 800px">
+        <div class="row" style="padding-top: 10px;  min-height: 500px">
+                <div class="col-12">
+                    文章标题
+                <input type="text" class="form-control" id="headline"/>
+                </div>
+                <div class="col-12" style="padding-top: 10px; padding-bottom: 10px">
+                    <script id="content" type="text/plain"></script>
+                </div>
+                <div class="col-1">
+                    <button type="submit" class="btn btn-primary" onclick="doPost()">发布</button>
+                </div>
+                <div class="col-2">
+                    <button type="submit" class="btn btn-dark" onclick="doDraft()">保存草稿</button>
+                </div>
+                <div class="col-9 row">
+
+                        <label for="articleType" style="line-height: 35px">文章类别：</label>
+                        <select id="articleType" class="form-control col-2" style="width: 100px; padding-left: 20px">
+                            <option selected value="0">选择...</option>
+                            <option value="1">养宠日志</option>
+                            <option value="2">喂养经验</option>
+                            <option value="3">驯养经验</option>
+                            <option value="4">宠物杂谈</option>
+                            <option value="5">讨论与提问</option>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+
+                        <label for="creditRequire" style="line-height: 35px">所需积分：</label>
+                        <select id="creditRequire" class="form-control col-2" style="width: 100px; padding-left: 20px">
+                            <option selected value="-1">选择...</option>
+                            <option value="0">0分</option>
+                            <option value="5">5分</option>
+                            <option value="10">10分</option>
+                            <option value="15">15分</option>
+                            <option value="20">20分</option>
+                            <option value="25">25分</option>
+                        </select>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                </div>
+
+        </div>
+    </div>
+
+<script type="text/javascript">
+    var ue = UE.getEditor('content', {
+        initialFrameHeight: 400,
+        toolbars: [
+        [
+            'source', //源代码
+            'undo', //撤销
+            'redo', //重做
+            'bold', //加粗
+            'indent', //首行缩进
+            'italic', //斜体
+            'underline', //下划线
+            'strikethrough', //删除线
+            'forecolor', //字体颜色
+            'subscript', //下标
+            'superscript', //上标
+            'formatmatch', //格式刷
+            'blockquote', //引用
+            'pasteplain', //纯文本粘贴模式
+            'selectall', //全选
+            'preview', //预览
+            'horizontal', //分隔线
+            'removeformat', //清除格式
+            'unlink', //取消链接
+            'inserttitle', //插入标题
+            'cleardoc', //清空文档
+            'fontfamily', //字体
+            //'fontsize', //字号
+            'paragraph', //段落格式
+            'link', //超链接
+            'emotion', //表情
+            'spechars', //特殊字符
+            'fontborder', //字符边框
+            'searchreplace', //查询替换
+            'help', //帮助
+            'justifyleft', //居左对齐
+            'justifyright', //居右对齐
+            'justifycenter', //居中对齐
+            'justifyjustify', //两端对齐
+            'backcolor', //背景色
+            'fullscreen', //全屏
+            'imagenone', //默认
+            'imageleft', //左浮动
+            'imageright', //右浮动
+            'imagecenter', //居中
+            'lineheight', //行间距
+            'edittip ', //编辑提示
+            'touppercase', //字母大写
+            'tolowercase', //字母小写
+        ]
+    ],
+    })
+
+    function doPost() {
+        let headline = $.trim($("#headline").val());
+        let contentPlain = UE.getEditor("content").getContentTxt();
+        if (headline.length < 5) {
+            bootbox.alert({title:"错误提示", message:"标题不能少于5个字."});
+            return false;
+        } else if (contentPlain.length < 10) {
+            bootbox.alert({title:"错误提示", message:"内容不能低于10字."});
+            return false;
+        } else if ($("#articleType").val() == 0) {
+            bootbox.alert({title:"错误提示", message:"请选择文章类型."});
+            return false;
+        } else if ($("#creditRequire").val() == -1) {
+            bootbox.alert({title:"错误提示", message:"请选择阅读文章所需积分."});
+            return false;
+        }
+        let param = "headline=" + headline;
+        param += "&content=" + encodeURIComponent(UE.getEditor("content").getContent());
+        param += "&type=" + $("#articleType").val();
+        param += "&credit=" + $("#creditRequire").val();
+        param += "&drafted=0&checked=0";
+        $.post('/submitArticle', param, function (data) {
+            if (data == "submit-pass") {
+                bootbox.alert({title:"提示", message:"发布成功！正在等待审核通过.  "});
+                setTimeout("location.href = '/';", 1000);
+            } else if (data == "submit-fail") {
+                bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员！"});
+            }
+        })
+    }
+
+    function doDraft() {
+        let headline = $.trim($("#headline").val());
+        let contentPlain = UE.getEditor("content").getContentTxt();
+        if (headline.length < 5) {
+            bootbox.alert({title:"错误提示", message:"标题不能少于5个字."});
+            return false;
+        } else if (contentPlain.length < 10) {
+            bootbox.alert({title:"错误提示", message:"内容不能低于10字."});
+            return false;
+        } else if ($("#articleType").val() == 0) {
+            bootbox.alert({title:"错误提示", message:"请选择文章类型."});
+            return false;
+        } else if ($("#creditRequire").val() == -1) {
+            bootbox.alert({title:"错误提示", message:"请选择阅读文章所需积分."});
+            return false;
+        }
+
+        let param = "headline=" + headline;
+        param += "&content=" + encodeURIComponent(UE.getEditor("content").getContent());
+        param += "&type=" + $("#articleType").val();
+        param += "&credit=" + $("#creditRequire").val();
+        param += "&drafted=1&checked=1";
+        $.post('/submitArticle', param, function (data) {
+            if (data == "submit-pass") {
+                bootbox.alert({title:"提示", message:"保存成功！"});
+                setTimeout("location.href = '/';", 1000);
+            } else if (data == "submit-fail") {
+                bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员！"});
+            }
+        })
+    }
+</script>
+{% endblock %}

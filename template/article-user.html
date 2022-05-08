@@ -1,0 +1,277 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--文章-->
+<div class="row">
+<div class="col-9" style="padding-left: 0; padding-right: 0; padding-top: 12px; padding-bottom: 50px">
+    <div class="col-12 row article-detail">
+        <!--标题-->
+        <div class="col-9 title">
+        {{article['headline']}}
+        </div>
+        {% if userRole != 'admin' and current_userid != article['userid'] %}
+        <div class="col-3 favorite" id="likes">
+            {% if is_favorite != True %}
+            <label class="likeButton" onclick="handleLike()" value="flag"><img src="/img/star.svg" width="32" height="22">收藏</label>
+            {% else %}
+            <label class="likeButton" onclick="handleLike()" value="flag"><img src="/img/star-fill.svg" width="32" height="22">已收藏</label>
+            {% endif %}
+        </div>
+        {% elif userRole == 'admin' %}
+        <div class="col-3 favorite" id="delete">
+            <label class="likeButton" onclick="handleRecommend('{{article.articleid}}')" value="flag"><img src="/img/thumb.svg" width="32" height="22">推荐本文</label>
+            <label class="likeButton" onclick="handleDelete('{{article.articleid}}')" value="flag"><img src="/img/delete.svg" width="32" height="22">删除本文</label>
+        </div>
+        {% endif %}
+
+        <!--文章信息-->
+        <div class="col-12 info">
+            作者:{{article['username']}}{% if article['username'] == 'admin' %}(管理员){% endif %}
+            &nbsp;&nbsp;&nbsp;类别:{{article_type[article['type']]}}&nbsp;&nbsp;&nbsp;
+            日期:{{article['uploadtime']}}&nbsp;&nbsp;&nbsp;
+            阅读:{{article['readcount']}}&nbsp;
+            收藏:{{article['likes']}}&nbsp;
+        </div>
+
+        <div class="col-12" id="content">
+             {{content | safe}}
+        </div>
+
+<!--                &lt;!&ndash;阅读全文按钮&ndash;&gt;-->
+<!--        {% if hideButton==False and article['userid']!=current_userid and article['credit']!=0 %}-->
+<!--        <div class="col-12 readall">-->
+<!--            <button class="col-12" onclick="readAll()">-->
+<!--                <span class="oi oi-data-transfer-download" aria-hidden="true">-->
+<!--                    阅读全文（消耗积分：{{article['credit']}})-->
+<!--                </span>-->
+<!--            </button>-->
+<!--        </div>-->
+<!--        {% endif %}-->
+
+    </div>
+
+    <!--文章页脚-->
+    <div class="col-12 article-nav">
+        <div>文章作者: {{article['username']}}</div>
+        <div>
+            上一篇：
+            <a href="/article/{{prev_and_next['prev_id']}}">{{prev_and_next['prev_headline']}}</a>
+        </div>
+        <div>
+            下一篇：
+            <a href="/article/{{prev_and_next['next_id']}}">{{prev_and_next['next_headline']}}</a>
+        </div>
+    </div>
+
+
+    <!--评论-->
+    <div class="col-12 article-comment" style="padding-bottom: 20px">
+        <div class="col-12 row" style="height: 68px; line-height: 68px">
+            <div class="col-1" style="padding-right: 0px; margin-right: 0px; padding-left: 0px; margin-left: 0px;">
+                <label for="nickname">你的昵称:</label>
+            </div>
+            <div class="col-11" style="padding-left: 0px">
+                <input type="text" id="nickname" class="form-control" style="margin: 15px 0" value="{{session.get('username')}}" readonly>
+            </div>
+        </div>
+
+        <div class="col-12 row" >
+            <div class="col-1" style="padding-right: 0px; margin-right: 0px; padding-left: 0px; margin-left: 0px;">
+                <label for="comment" style="padding-top: 0px">你的评论:</label>
+            </div>
+            <div class="col-11" style="padding-left: 0px">
+                <input type="text" id="comment" class="form-control" style="height: 100px; margin-bottom: 20px;">
+            </div>
+        </div>
+
+        <div class="col-12 row" style="margin-bottom: 20px">
+            <div class="col-12 row" >
+                <div class="col-2" style="padding-left: 0px">
+                    <button class="btn btn-primary" onclick="addComment('{{article.articleid}}')">发表评论</button>
+                </div>
+                {% if userRole != 'admin' %}
+                <div style="padding-left: 0px">
+                    <p class="card-text"><small class="text-muted">发表评论可获得2积分，每天最多评论6次.</small></p>
+                </div>
+                {% endif %}
+            </div>
+        </div>
+
+        {% for i in comment_user %}
+        <div class="media row" id="comment-list" style="padding-left: 10px; padding-top: 10px; min-height: 90px">
+            <div class="col-1">
+              <img src="/avatar/{{i[1].avatar}}" class="mr-3 img-fluid" alt="..." style="width: 70px">
+            </div>
+          <div class="media-body">
+            <div class="row" style="padding-left: 20px">
+                <div class="col-9" style="padding-left: 0px">
+                    <h5 class="mt-0">{{i[1].username}}
+                        {% if i[1].userid == current_userid %}
+                        <small class="text-muted">(自己)</small>
+                        {% elif i[1].username == 'admin' %}
+                        <small class="text-muted">(管理员)</small>
+                        {% endif %}
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                        &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    </h5>
+                </div>
+                <div style="padding-left: 0px">
+                    <small class="text-muted">发布时间：{{i[0].createtime}}</small>
+                </div>
+            </div>
+            <div class="row" style="padding-left: 20px">
+                <p>{{i[0].content}}</p>
+            </div>
+              {% if i[1].userid != current_userid %}
+            <div class="col-5 reply row" style="padding-right: 0px; padding-left: 20px; user-select:none;" id="agreeAndDisagree">
+                {% if userRole!='admin' and i[1].username != 'admin' %}
+                <label onclick="handleAgree(this, '{{i[0].commentid}}')">
+                    <span class="oi oi-chevron-bottom" aria-hidden="true" @click="handleAgree()" value="{{i[0].agreecount}}" id="agreeId" > </span>赞(<span>{{i[0].agreecount}}</span>)
+                </label>&nbsp;&nbsp;&nbsp;
+                <label onclick="handleDisagree(this, '{{i[0].commentid}}')">
+                    <span class="oi oi-x" aria-hidden="true" @click="handleOppose()" value="{{i[0].opposecount}}" id="disagreeId" > </span> 踩(<span>{{i[0].opposecount}}</span>)
+                </label>&nbsp;&nbsp;&nbsp;
+                {% elif userRole == 'admin' %}
+                <label>
+                    <span class="oi oi-delete" aria-hidden="true" onclick="handleHide('{{i[0].commentid}}')"> 删除 </span>
+                </label>
+                {% endif %}
+            </div>
+              {% endif %}
+<!--                        <div class="media mt-3">-->
+<!--                          <a class="mr-3" href="#">-->
+<!--                            <img src="..." alt="...">-->
+<!--                          </a>-->
+<!--                          <div class="media-body">-->
+<!--                            <h5 class="mt-0">Media heading</h5>-->
+<!--                            <p>Greetings loved ones let's take a journey. Yes, we make angels cry, raining down on earth from up above. Give you something good to celebrate. I used to bite my tongue and hold my breath. I'm ma get your heart racing in my skin-tight jeans. As I march alone to a different beat. Summer after high school when we first met. You're so hypnotizing, could you be the devil? Could you be an angel? It's time to bring out the big balloons. Thought that I was the exception. Bikinis, zucchinis, Martinis, no weenies.</p>-->
+<!--                          </div>-->
+<!--                        </div>-->
+          </div>
+        </div>
+        {% endfor %}
+
+    </div>
+</div>
+{% include 'side.html' %}
+</div>
+<script>
+    function readAll() {
+        let param = 'articleid={{article.articleid}}&position={{position}}'
+        $.post('/readall', param, function (data) {
+            if (data == 'credit-not-enough') {
+                bootbox.alert({title:"错误提示", message:"您的积分不足."});
+            } else{
+                $("#content").append(data);
+                $(".readall").hide();
+            }
+        })
+    }
+
+    function handleLike() {
+        let param = 'articleid={{article.articleid}}';
+        if ($(".likeButton").html() == '<img src="/img/star.svg" width="32" height="22">收藏') {
+             $.post('/like', param, function (data) {
+                if (data=='favorite-pass') {
+                    $(".likeButton").html('<img src="/img/star-fill.svg" width="32" height="22">已收藏');
+                } else {
+                    bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."});
+                }
+            })
+        } else {
+             $.post('/canclelike', param, function (data) {
+                if (data=='cancel-pass') {
+                    $(".likeButton").html('<img src="/img/star.svg" width="32" height="22">收藏');
+                } else {
+                    bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."});
+                }
+            })
+        }
+    }
+
+    function addComment(articleid) {
+        let content = $.trim($('#comment').val());
+        console.log(content);
+        if (content.length < 5 || content.length > 1000) {
+            bootbox.alert({title:"错误提示", message:"评论字数应在5-1000字内."});
+            return false;
+        }
+        let param = 'articleid=' + articleid + '&content=' + content;
+        $.post('/comment', param, function (data) {
+            console.log(data)
+            if (data == 'content-invalid') {
+                bootbox.alert({title:"错误提示", message:"评论字数应在5-1000字内."});
+            } else if (data == 'add-limit') {
+                bootbox.alert({title:"错误提示", message:"评论次数已达上限."});
+            } else if (data == 'add-fail') {
+                bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."})
+            } else if (data == 'add-pass') {
+                bootbox.alert({title:"提示", message:"评论成功，积分+2！"});
+                setTimeout("location.reload();", 1000);
+            } else if (data == 'admin-add-pass') {
+                bootbox.alert({title:"提示", message:"评论成功！"});
+                setTimeout("location.reload();", 1000);
+            }
+        })
+    }
+
+    function handleAgree(obj, commentid) {
+        param = "commentid=" + commentid;
+        $.post('/agree', param, function (data) {
+            if(data == 'agree-pass'){
+                let element = $(obj).children('span').eq(1);
+                let count = parseInt(element.text());
+                element.text(count+1);
+            }
+        })
+    }
+
+    function handleDisagree(obj, commentid) {
+        param = "commentid=" + commentid;
+        $.post('/disagree', param, function (data) {
+            if(data == 'disagree-pass'){
+                let element = $(obj).children('span').eq(1);
+                let count = parseInt(element.text());
+                element.text(count+1);
+            }
+        })
+    }
+
+    function handleHide(commentid) {
+        param = "commentid=" + commentid;
+        $.post('/hideComment', param, function (data) {
+            location.reload();
+        })
+    }
+
+    function handleGood (articleid) {
+        param = "articleid=" + articleid;
+        $.post('/uploadChecking', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/userpage/myCheckings';", 1000);
+        })
+    }
+
+    function handleDelete (articleid) {
+        param = "articleid=" + articleid;
+        console.log(param);
+        $.post('/deleteArticle', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/';", 1000);
+        })
+    }
+
+    function handleRecommend (articleid) {
+        param = "articleid=" + articleid;
+        $.post('/recommend', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/';", 1000);
+        })
+    }
+</script>
+{% endblock %}

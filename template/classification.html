@@ -1,0 +1,64 @@
+{% extends 'vueBase.html' %}
+{% block content %}
+<div id="app" class="col-9">
+    <el-card class="box-card" style="height: 1100px; margin-top: 10px; margin-bottom: 10px">
+        <div slot="header" class="clearfix">
+            <h1>宠物鉴定</h1>
+            <p class="card-text"><small class="text-muted">
+                目前可识别：
+                {% for name in breedNames %}
+                {{name}}&nbsp;&nbsp;
+                {% endfor %}
+            </small></p>
+            <p class="card-text"><small class="text-muted"><b>！！识别通常需要10-15秒，请耐心等待 ！！</b></small></p>
+        </div>
+        <div class="row" style="padding: 10px 10px; margin-left: 0px ">
+            <el-upload
+                action="#"
+                ref="upload"
+                action="#"
+                list-type="picture-card"
+                :on-preview="handlePictureCardPreview"
+                :on-success="handleUploadSuccess"
+                :on-remove="handleRemove">
+            <i class="el-icon-plus"></i>
+            </el-upload>
+            <el-dialog :visible.sync="dialogVisible">
+                <img width="100%" :src="dialogImageUrl" alt="">
+            </el-dialog>
+        </div>
+        <div class="row" v-if="showPage" v-cloak>
+            <div class="col-5" style="padding-left: 35px">
+                <div class="row">
+                    <h3>品种：
+                    {% raw %}
+                    {{breedName}}
+                    {% endraw %}
+                    </h3>
+                </div>
+                <div class="row">
+                    <img v-bind:src="breedCover" style="height: 200px; width: 300px; border-radius: 25px;">
+                </div>
+            </div>
+            <div class="col-7" style="padding: 50px">
+                <p>{% raw %} {{breedDesc}} {% endraw %}</p>
+            </div>
+            <div class="col-12">
+                <h3>本站中的相关文章：</h3>
+                <div class="list-group" style="padding-left: 0px; margin-left: 0px; padding-top: 10px" v-for="article in articles">
+                    <a v-bind:href="['/article/' + article[4]]" class="list-group-item list-group-item-action" style="width: 880px">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">文章：{% raw %}{{article[0]}}{% endraw %}</h5>
+                            <small>发布时间：{% raw %}{{article[1]}}{% endraw %}</small>
+                        </div>
+                        <small>作者：{% raw %}{{article[3]}}{% endraw %}</small>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </el-card>
+</div>
+{% include 'side.html' %}
+
+{% endblock %}

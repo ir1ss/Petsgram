@@ -1,0 +1,103 @@
+body {
+    margin: 0;
+    font-family: "Source Sans Pro",-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Arial,sans-serif;
+    font-size: .9375rem;
+    font-weight: 400;
+    line-height: 1.5;
+    color: #495057;
+    text-align: left;
+    background-size: 100%;
+    background-color: rgba(var(--b3f,250,250,250),1);
+}
+
+img {
+    max-width: 100%;
+    max-height: 100%;
+}
+
+@media (min-width: 1300px) {
+    .container {
+        max-width: 1300px;
+    }
+}
+
+.header {
+    border-top: solid 3px black;
+}
+
+.side {
+    border: solid 1px #ccc;
+    margin: 10px 0;
+    background-color: white;
+}
+
+.side .tip {
+    background-color: #333333;
+    height: 42px;
+    color: white;
+    line-height: 42px;
+    font-size: 18px;
+}
+
+.side ul {
+    list-style: none;
+    padding-left: 10px;
+}
+
+.side ul li {
+    line-height: 35px;
+}
+
+a {
+    color: #495057;
+}
+
+div {
+    border-radius: 5px;
+}
+
+.article-detail {
+    background-color: white;
+    border: solid 1px #cccccc;
+    padding: 30px 15px;
+    margin: 0 0;
+}
+
+.article-detail .title {
+    font-size: 24px;
+    color: #121212;
+    font-weight: bold;
+}
+
+.article-detail .favorite {
+    text-align: right;
+    font-weight: bold;
+}
+
+.article-detail .info {
+    margin-top: 20px;
+    border-bottom: solid 1px #cccccc;
+    margin-bottom: 20px;
+    line-height: 60px;
+}
+
+.article-nav {
+    background-color: white;
+    border: solid 1px #cccccc;
+    margin-top: 20px;
+}
+
+.article-nav div {
+    height: 40px;
+    line-height: 40px;
+}
+
+.article-comment {
+    background-color: white;
+    border: solid 1px #cccccc;
+    margin-top: 20px;
+}
+
+label {
+    cursor: pointer;
+}

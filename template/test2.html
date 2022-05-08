@@ -1,0 +1,381 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Petsgram</title>
+    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <link href="/font/css/open-iconic-bootstrap.css" rel="stylesheet"/>
+    <link rel="stylesheet" type="text/css" href="/css/basic.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/ue/dist/utf8-php/ueditor.config.js"></script>
+    <script type="text/javascript" src="/ue/dist/utf8-php/ueditor.all.min.js"></script>
+    <script type="text/javascript" src="/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="/js/petsgram.js"></script>
+    <script type="text/javascript" src="/js/vue.js"></script>
+</head>
+<body>
+    <!--首部-->
+    <div class="container-fluid" style="height: 102px; border-bottom: solid 1px #cbd3da; background-color: white">
+        <div class="row">
+            <div class="col-1"></div>
+
+            <!--logo-->
+            <div class="col-4">
+                <a href="/"><img src="/img/logo.png" width="140px" height="100px"></a>
+            </div>
+
+            <!--搜索-->
+            <div class="col-3" style="padding-top: 20px">
+                <nav class="navbar navbar-light">
+                    <form class="form-inline" onkeypress="return event.keyCode != 13;">
+                        <input id="keyword" class="form-control mr-sm-2" type="text" placeholder="搜索" aria-label="Search" onkeyup="doSearch(event)">
+                        <a href="#" id="searchArt"><button class="btn btn-outline-success my-2 my-sm-0" style="color: black; border-color: black;" type="button" onclick="doSearch(null)">搜索</button></a>
+                    </form>
+                </nav>
+            </div>
+
+            <!--导航-->
+            <div class="col-4">
+                <div class="row">
+                    <nav class="navbar navbar-light" style="padding-top: 22px">
+                      <a class="navbar-brand" href="/" title="首页">
+                        <img src="/img/homee.svg" width="30" height="30" alt="">
+                      </a>
+                    </nav>
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px">
+                      <a class="navbar-brand" href="/classification" title="宠物识别">
+                        <img src="/img/camera.svg" width="30" height="30" alt="">
+                      </a>
+                    </nav>
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px">
+                      <a class="navbar-brand" href="/write" title="发布文章">
+                        <img src="/img/write.svg" width="30" height="30" alt="">
+                      </a>
+                    </nav>
+
+<!--                    <nav class="navbar navbar-light" style="padding-top: 22px">-->
+<!--                      <a class="navbar-brand" href="/shop" title="交易">-->
+<!--                        <img src="/img/shop.svg" width="30" height="30" alt="">-->
+<!--                      </a>-->
+<!--                    </nav>-->
+
+<!--                    <nav class="navbar navbar-light" style="padding-top: 22px">-->
+<!--                      <a class="navbar-brand" href="/notification" title="消息">-->
+<!--                        <img src="/img/bell.svg" width="30" height="30" alt="">-->
+<!--                      </a>-->
+<!--                    </nav>-->
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px" title="个人主页">
+
+                        <a class="navbar-brand" href="/userpage/myArticles">
+                        <img src="/img/user.svg" width="30" height="30" alt="">
+                        </a>
+
+                    </nav>
+
+                    <nav class="navbar navbar-light" style="padding-top: 22px"  id="logout" title="退出">
+                      <a class="navbar-brand" href="#" onclick="handleLogOut()">
+                        <img src="/img/door.svg" width="30" height="30" alt="" >
+                      </a>
+                    </nav>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!--正文部分 -->
+    <div class="container">
+        <div class="row">
+
+<!--文章-->
+<div class="row">
+<div class="col-9" style="padding-left: 0; padding-right: 0; padding-top: 12px; padding-bottom: 50px">
+    <div class="col-12 row article-detail">
+        <!--标题-->
+        <div class="col-9 title">
+        养西施犬之前一定要了解的知识
+        </div>
+
+        <div class="col-3 favorite" id="delete">
+            <label class="likeButton" onclick="handleRecommend('55')" value="flag"><img src="/img/thumb.svg" width="32" height="22">推荐本文</label>
+            <label class="likeButton" onclick="handleDelete('55')" value="flag"><img src="/img/delete.svg" width="32" height="22">删除本文</label>
+        </div>
+
+
+        <!--文章信息-->
+        <div class="col-12 info">
+            作者:sqw
+            &nbsp;&nbsp;&nbsp;类别:喂养经验&nbsp;&nbsp;&nbsp;
+            日期:2021-05-20&nbsp;&nbsp;&nbsp;
+            阅读:0&nbsp;
+            收藏:0&nbsp;
+        </div>
+
+        <div class="col-12" id="content">
+             <p>西施犬，起源于17世纪的中国西藏，在当时西施犬由喇嘛饲养，主要工作是在庙内作为看门犬。外形近似狮子的西施犬被人们认为和狮子犬关系密切，并且喇嘛教的学问之神----曼珠休理会经常带着会变狮子的小型犬。在1908年，西施犬被传入欧洲，并在1935年成立了英国的西施犬俱乐部，而美国也在1969年给该品种注册登记，认为它是独立的一个犬种。</p><p><br/></p><p>西施犬的性格开朗活泼、聪明善良，对周围人都特别热情友好，并且十分勇敢，遇到突发情况时，不会因为自己小巧的体型而畏惧，会表现出它凶悍的一面。它十分依赖主人，所以饲养的话需要经常花费时间来陪伴它，但它也非常贴心，当主人忙碌时回自己娱乐打发时间。</p><p><br/></p><p>西施犬历史</p><p>西施狗起源于中国西藏，其历史十分久远。在隋唐时代的一些绘画和文学作品中就有西施犬的身影。在17世纪满清入关后，西施狗被引进到了首都北京紫禁城，在1930年，中国文化开放，与欧洲等地区展开了文化和商业交流，此时西施狗被引入到了欧洲。1935年，英国成立了西施犬俱乐部，后来西施狗又由英国引入斯坎地纳维亚国家和其他欧洲国家以及澳大利亚，并在第二次世界大战期间驻英美军回国时又引入了美国。1969年，美国养犬俱乐部对西施犬进行认证登记。</p><p><br/></p><p>西施犬适合人群</p><p>西施犬适合多种类型家庭饲养，不仅适应于城市生活也适应于农村生活，它长相精致漂亮，有一股独属于的东方魅力，在犬界有着中国古代四大美人之一“西施”之称的美誉。它性情开朗、活泼好动、好奇心重，并且对人友善，体型娇小，十分适合家庭饲养，会给家里带来许多快乐。</p><p><br/></p><p>西施犬常见病</p><p>整体：西施犬体格结实、性格活泼、警惕心强，是一种漂亮的玩具狗，体型娇小，动作灵活，四肢短小。两层被毛，外貌为丰富的波浪状，底毛浓密柔软，毛发很长，平滑有光泽。毛色有许多种，通常是只有一种颜色的纯色的西施犬。它的中国祖先具有高贵的血统，是一种宫廷宠物，因此西施犬骨子里遗传了这种高贵和优越感，总是骄傲地高傲地脑袋，尾巴上翘。</p><p><br/></p><p>从肩到尾根的长度比肩高略大。西施犬不可以太高或太矮，要不然容易变成长脚狗或矮脚鸡。但是不管是什么尺寸，西施犬都应该是结构紧凑且体格结实，而且有一定的体重和骨量。</p><p><br/></p><p>一般外貌：结实，被毛丰富，面部似菊花，姿态傲慢。体重：4~8公斤，身高不超过27厘米。</p><p><br/></p><p>头：头圆且宽，两眼距离很大，但是和整体的比例又十分恰当，既不太大也不太小。脑袋呈圆拱形，止部轮廓清晰。</p><p><br/></p><p>热情亲切的表情，眼睛大睁着，表现出友好和信任的样子。平衡力与让人愉悦舒服的表情比其他部分要显得重要。</p><p><br/></p><p>缺陷：头窄。</p><p><br/></p><p>眼睛：眼大而圆，深陷，两眼之间的距离比较大。眼睛的颜色很深。而肝色和兰色狗的眼睛则颜色浅一些。缺陷：眼距较小。</p><p><br/></p><p>耳：大，耳根的位置在头顶下略低处。</p><p><br/></p><p>颌/牙：口吻又短又宽，没有皱纹，前端平，上嘴唇厚实，下唇和下颌不突出，也不后缩。鼻孔宽大而开阔。鼻镜、嘴唇以及眼圈都应该是黑色的。</p><p><br/></p><p>颈、躯体：最重要的特点就是整体均衡，无太过夸张之处。颈部与肩的结合流畅平滑;颈长而身短，体格结实，没有细腰或收腹。体长略大于肩高。</p><p><br/></
+        </div>
+
+                <!--阅读全文按钮-->
+
+
+    </div>
+
+    <!--文章页脚-->
+    <div class="col-12 article-nav">
+        <div>文章作者: sqw</div>
+        <div>
+            上一篇：
+            <a href="/article/55">养西施犬之前一定要了解的知识</a>
+        </div>
+        <div>
+            下一篇：
+            <a href="/article/54">管理员公告</a>
+        </div>
+    </div>
+
+
+    <!--评论-->
+    <div class="col-12 article-comment" style="padding-bottom: 20px">
+        <div class="col-12 row" style="height: 68px; line-height: 68px">
+            <div class="col-1" style="padding-right: 0px; margin-right: 0px; padding-left: 0px; margin-left: 0px;">
+                <label for="nickname">你的昵称:</label>
+            </div>
+            <div class="col-11" style="padding-left: 0px">
+                <input type="text" id="nickname" class="form-control" style="margin: 15px 0" value="admin" readonly>
+            </div>
+        </div>
+
+        <div class="col-12 row" >
+            <div class="col-1" style="padding-right: 0px; margin-right: 0px; padding-left: 0px; margin-left: 0px;">
+                <label for="comment" style="padding-top: 0px">你的评论:</label>
+            </div>
+            <div class="col-11" style="padding-left: 0px">
+                <input type="text" id="comment" class="form-control" style="height: 100px; margin-bottom: 20px;">
+            </div>
+        </div>
+
+        <div class="col-12 row" style="margin-bottom: 20px">
+            <div class="col-12 row" >
+                <div class="col-2" style="padding-left: 0px">
+                    <button class="btn btn-primary" onclick="addComment('55')">发表评论</button>
+                </div>
+
+            </div>
+        </div>
+
+
+
+    </div>
+</div>
+<!--侧边栏-->
+<div class="col-3" style="border: none; padding-right: 0px;">
+    <!--推荐栏部分 -->
+    <div class="side">
+        <div class="col-12 tip">文章分类</div>
+        <ul class="list-group" style="padding-left: 0px">
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/1-1">养宠日志</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/2-1">喂养经验</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/3-1">驯养经验</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/4-1">宠物杂谈</a></li>
+
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/5-1">讨论与提问</a></li>
+
+        </ul>
+
+    </div>
+
+    <div class="side">
+        <div class="col-12 tip">最多收藏</div>
+        <ul>
+
+            <li><a href="/article/52">1.养爱尔兰梗的注意事项</a></li>
+
+            <li><a href="/article/54">2.管理员公告</a></li>
+
+            <li><a href="/article/55">3.养西施犬之前一定要了解的知识</a></li>
+
+        </ul>
+    </div>
+
+    <div class="side">
+        <div class="col-12 tip">最多阅读</div>
+        <ul>
+
+            <li><a href="/article/52">1.养爱尔兰梗的注意事项</a></li>
+
+            <li><a href="/article/54">2.管理员公告</a></li>
+
+            <li><a href="/article/55">3.养西施犬之前一定要了解的知识</a></li>
+
+        </ul>
+    </div>
+
+</div>
+</div>
+<script>
+    function readAll() {
+        let param = 'articleid=55&position=1522'
+        $.post('/readall', param, function (data) {
+            if (data == 'credit-not-enough') {
+                bootbox.alert({title:"错误提示", message:"您的积分不足."});
+            } else{
+                $("#content").append(data);
+                $(".readall").hide();
+            }
+        })
+    }
+
+    function handleLike() {
+        let param = 'articleid=55';
+        if ($(".likeButton").html() == '<img src="/img/star.svg" width="32" height="22">收藏') {
+             $.post('/like', param, function (data) {
+                if (data=='favorite-pass') {
+                    $(".likeButton").html('<img src="/img/star-fill.svg" width="32" height="22">已收藏');
+                } else {
+                    bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."});
+                }
+            })
+        } else {
+             $.post('/canclelike', param, function (data) {
+                if (data=='cancel-pass') {
+                    $(".likeButton").html('<img src="/img/star.svg" width="32" height="22">收藏');
+                } else {
+                    bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."});
+                }
+            })
+        }
+    }
+
+    function addComment(articleid) {
+        let content = $.trim($('#comment').val());
+        console.log(content);
+        if (content.length < 5 || content.length > 1000) {
+            bootbox.alert({title:"错误提示", message:"评论字数应在5-1000字内."});
+            return false;
+        }
+        let param = 'articleid=' + articleid + '&content=' + content;
+        $.post('/comment', param, function (data) {
+            console.log(data)
+            if (data == 'content-invalid') {
+                bootbox.alert({title:"错误提示", message:"评论字数应在5-1000字内."});
+            } else if (data == 'add-limit') {
+                bootbox.alert({title:"错误提示", message:"评论次数已达上限."});
+            } else if (data == 'add-fail') {
+                bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."})
+            } else if (data == 'add-pass') {
+                bootbox.alert({title:"提示", message:"评论成功，积分+2！"});
+                setTimeout("location.reload();", 1000);
+            } else if (data == 'admin-add-pass') {
+                bootbox.alert({title:"提示", message:"评论成功！"});
+                setTimeout("location.reload();", 1000);
+            }
+        })
+    }
+
+    function handleAgree(obj, commentid) {
+        param = "commentid=" + commentid;
+        $.post('/agree', param, function (data) {
+            if(data == 'agree-pass'){
+                let element = $(obj).children('span').eq(1);
+                let count = parseInt(element.text());
+                element.text(count+1);
+            }
+        })
+    }
+
+    function handleDisagree(obj, commentid) {
+        param = "commentid=" + commentid;
+        $.post('/disagree', param, function (data) {
+            if(data == 'disagree-pass'){
+                let element = $(obj).children('span').eq(1);
+                let count = parseInt(element.text());
+                element.text(count+1);
+            }
+        })
+    }
+
+    function handleHide(commentid) {
+        param = "commentid=" + commentid;
+        $.post('/hideComment', param, function (data) {
+            location.reload();
+        })
+    }
+
+    function handleGood (articleid) {
+        param = "articleid=" + articleid;
+        $.post('/uploadChecking', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/userpage/myCheckings';", 1000);
+        })
+    }
+
+    function handleDelete (articleid) {
+        param = "articleid=" + articleid;
+        console.log(param);
+        $.post('/deleteArticle', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/';", 1000);
+        })
+    }
+
+    function handleRecommend (articleid) {
+        param = "articleid=" + articleid;
+        $.post('/recommend', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/';", 1000);
+        })
+    }
+</script>
+
+
+        </div>
+
+    </div>
+
+    <!--页脚 -->
+    <div class="container-fluid" style="height: 100px; border-top: solid 1px #b9bbbe; background-color: white">
+        <p style="color: #586069">@2021 Qiwei Sun</p>
+    </div>
+
+<script type="text/javascript">
+    function doSearch(e) {
+        if(e != null && e.keyCode != 13) return false;
+        let keyword = $.trim($("#keyword").val());
+        if(keyword == "" || keyword.length > 20 || keyword.indexOf('%') >= 0){
+          bootbox.alert({'title' : '错误提示', 'message' : "输入无效，请重新输入"});
+          $('#keyword').val('');
+          $('#keyword').focus();
+        } else location.href = '/search/1-' + keyword;
+    }
+
+    function handleLogOut() {
+        bootbox.confirm({
+            buttons: {
+                confirm: {
+                    label: "确定"
+                },
+                cancel: {
+                    label: "取消"
+                }
+            },
+            title:"提示",
+            message:"你确定要退出吗？",
+            callback: function (result){
+                if(result) location.href = '/logout';
+            }
+        });
+    }
+</script>
+</body>
+</html>

@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>注册Petsgram</title>
+    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/petsgram.js"></script>
+    <script type="text/javascript" src="/js/bootbox.min.js"></script>
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <style>
+        body {
+            background-size: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!--登录界面的容器-->
+    <div class="container-fluid">
+        <div class="row">
+            <!--左边的图片-->
+            <div class="col-6" style="padding-left: 0px; padding-right: 0px; margin-right: 0px">
+                <img src="/img/login.jpg" width="100%">
+            </div>
+
+            <!--右边的内容-->
+            <div class="col-6" style="padding-left: 100px; user-select:none;">
+                <!--logo-->
+                <div class="row" style="padding-left: 150px; height: 148px">
+                    <img src="/img/logo.png">
+                </div>
+                <!--注册-->
+                <div class="row" id="reg"  style="user-select:none;">
+                    <div style="width: 550px">
+                        <!--用户名、密码-->
+                        <div class="form-row">
+                        <div class="form-group col-md-6">
+                          <label for="inputUsername">用户名</label>
+                          <input type="username" class="form-control" id="inputUsername">
+                        </div>
+                        <div class="form-group col-md-6">
+                          <label for="inputPassword">密码</label>
+                          <input type="password" class="form-control" id="inputPassword">
+                        </div>
+                      </div>
+                        <!--宠物昵称-->
+                        <div class="form-group">
+                            <label for="inputPetName">宠物昵称</label>
+                            <input type="text" class="form-control" id="inputPetName" placeholder="输入宠物昵称">
+                        </div>
+                        <!--宠物品种-->
+                        <div class="form-group">
+                            <label for="inputPetBreed">宠物品种</label>
+                            <input type="text" class="form-control" id="inputPetBreed" placeholder="输入宠物品种">
+                        </div>
+                        <!--地址-->
+                        <div class="form-row">
+                            <div class="form-group col-md-6">
+                                <label for="inputCity">居住城市</label>
+                                <input type="text" class="form-control" id="inputCity">
+                            </div>
+                            <div class="form-group col-md-6">
+                          <label for="inputState">居住省份</label>
+                          <select id="inputState" class="form-control">
+                            <option selected>选择...</option>
+                              <option value="北京">北京市</option>
+                              <option value="浙江省">浙江省</option>
+                              <option value="天津市">天津市</option>
+                              <option value="安徽省">安徽省</option>
+                              <option value="上海市">上海市</option>
+                              <option value="福建省">福建省</option>
+                              <option value="重庆市">重庆市</option>
+                              <option value="江西省">江西省</option>
+                              <option value="山东省">山东省</option>
+                              <option value="河南省">河南省</option>
+                              <option value="湖北省">湖北省</option>
+                              <option value="湖南省">湖南省</option>
+                              <option value="广东省">广东省</option>
+                              <option value="海南省">海南省</option>
+                              <option value="山西省">山西省</option>
+                              <option value="青海省">青海省</option>
+                              <option value="江苏省">江苏省</option>
+                              <option value="辽宁省">辽宁省</option>
+                              <option value="吉林省">吉林省</option>
+                              <option value="台湾省">台湾省</option>
+                              <option value="河北省">河北省</option>
+                              <option value="贵州省">贵州省</option>
+                              <option value="四川省">四川省</option>
+                              <option value="云南省">云南省</option>
+                              <option value="陕西省">陕西省</option>
+                              <option value="甘肃省">甘肃省</option>
+                              <option value="黑龙江省">黑龙江省</option>
+                              <option value="香港特别行政区">香港特别行政区</option>
+                              <option value="澳门特别行政区">澳门特别行政区</option>
+                              <option value="广西壮族自治区">广西壮族自治区</option>
+                              <option value="宁夏回族自治区">宁夏回族自治区</option>
+                              <option value="新疆维吾尔自治区">新疆维吾尔自治区</option>
+                              <option value="内蒙古自治区">内蒙古自治区</option>
+
+                          </select>
+                        </div>
+
+                        </div>
+                        <!--电子邮箱-->
+                        <div class="form-group row">
+                            <div class="col-7">
+                                <label for="inputEmail">电子邮箱</label>
+                                <input type="text" class="form-control" id="inputEmail" placeholder="输入邮箱地址">
+                            </div>
+                           <div class="col-5" style="padding-left: 20px; padding-top: 30px">
+                                <button type="button" class="btn btn-primary" onclick="doSendMail(this)">发送邮件</button>
+                            </div>
+                        </div>
+                        <!--邮箱验证码-->
+                        <div class="form-row" style="padding-left: 5px">
+                            <label for="ecode" class="col-12">邮箱验证码</label>
+                            <input type="text" class="form-control col-4" id="ecode" name="ecode" placeholder="输入邮箱验证码">
+                        </div>
+                        <!--同意文明使用-->
+                        <div class="form-group" style="padding-top: 10px">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="gridCheck" v-on:click="changeReg()">
+                                <label class="form-check-label" for="gridCheck">
+                                    同意文明使用社区
+                                </label>
+                            </div>
+                        </div>
+                        <!--注册-->
+                        <div class="row">
+                            <div class="col-3">
+                                <button type="submit" class="btn btn-primary" :disabled="disabled" onclick="deReg()">注册</button>
+                            </div>
+                            <div class="col-9" style="padding-left: 0px">
+                                <a href="/login">我已经注册了账号</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</body>
+<script>
+new Vue({
+        el: '#reg',
+        data() {
+            return {
+                disabled : true
+            };
+        },
+        methods: {
+            changeReg() {
+                this.disabled = !this.disabled;
+            }
+        }
+    })
+</script>
+</html>

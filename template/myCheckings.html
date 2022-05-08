@@ -1,0 +1,86 @@
+{% extends 'vueBase.html' %}
+{% block content %}
+<div class="col-12 row article-detail" style="margin-top: 10px; margin-bottom: 10px;">
+    <div slot="header" class="clearfix col-12" style="height: 180px">
+        <h1>{{username}} 的个人中心.</h1>
+        <div class="col-12 info" style="padding-left: 0px">
+            拥有积分:&nbsp;{{credits}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;已发表文章:&nbsp;{{articleNum}}&nbsp;篇&nbsp;&nbsp;&nbsp;
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-3" >
+            <div class="list-group" id="list-tab" role="tablist" style="width: 240px">
+                {% if userRole != 'admin' %}
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab" aria-controls="home" onclick="handleMyFav();">我的收藏</a>
+               <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab" aria-controls="profile" onclick="handleMyArticles();">我的文章</a>
+                {% else %}
+               <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab" aria-controls="profile" onclick="handleMyArticles();">我的文章</a>
+               {% endif %}
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab" aria-controls="messages" onclick="handleMyDrafts();">我的草稿</a>
+                {% if userRole != 'admin' %}
+                <a class="list-group-item list-group-item-action active" data-toggle="list" href="#" role="tab" aria-controls="settings" onclick="handleMyCheckings();">正在审核的文章</a>
+                {% else %}
+                <a class="list-group-item list-group-item-action active" data-toggle="list" href="#" role="tab" aria-controls="settings" onclick="handleCheckings();">待审核的文章</a>
+                {% endif %}
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab" aria-controls="settings" onclick="handleMyComments();">我的评论</a>
+                <a class="list-group-item list-group-item-action" data-toggle="list" href="#" role="tab" aria-controls="settings" onclick="handleMyMentioned();">评论我的</a>
+            </div>
+        </div>
+        <div class="col-9" style="margin-left: 0px">
+                <div class="list-group" style="padding-left: 0px; margin-left: 0px">
+                    {% for i in userChecks %}
+                    {% if userRole == 'admin' %}
+                    <a href="/checkingArticle/{{i.articleid}}" class="list-group-item list-group-item-action" style="width: 880px">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">文章：{{i.headline}}</h5>
+                            <small>上传时间：{{i.uploadtime}}</small>
+                        </div>
+                        <p class="mb-1">内容预览：{{i.content | striptags | truncate(100)}}</p>
+                    </a>
+                    {% else %}
+                    <a href="#" class="list-group-item list-group-item-action" style="width: 880px">
+                        <div class="d-flex w-100 justify-content-between">
+                            <h5 class="mb-1">文章：{{i.headline}}</h5>
+                            <small>上传时间：{{i.uploadtime}}</small>
+                        </div>
+                        <p class="mb-1">内容预览：{{i.content | striptags | truncate(100)}}</p>
+                    </a>
+                    {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+    </div>
+    <div class="row col-12" style="height: 400px"></div>
+</div>
+
+
+<script>
+    function handleMyFav () {
+        location.href = '/userpage';
+    }
+
+    function handleMyArticles () {
+        location.href = '/userpage/myArticles';
+    }
+
+    function handleMyDrafts () {
+        location.href = '/userpage/myDrafts';
+    }
+
+    function handleMyCheckings () {
+        location.href = '/userpage/myCheckings';
+    }
+
+    function handleMyComments () {
+        location.href = '/userpage/myComments';
+    }
+
+    function handleMyMentioned () {
+        location.href = '/userpage/myMentioned';
+    }
+
+    function handleCheckings () {
+        location.href = '/userpage/myCheckings';
+    }
+</script>
+{% endblock %}

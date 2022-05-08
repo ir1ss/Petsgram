@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<img src="/img/error-404.png" class="col-12"/>
+
+<script>
+  setTimeout(function () {
+    location.href = '/';
+  }, 3000)
+</script>
+{% endblock %}

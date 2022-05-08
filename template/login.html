@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>登录Petsgram</title>
+    <link rel="icon" href="/img/logo.png" type="image/x-icon">
+    <link rel="stylesheet" type="text/css" href="/css/bootstrap.css"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <script type="text/javascript" src="/js/jquery-3.6.0.min.js"></script>
+    <script type="text/javascript" src="/js/bootstrap.js"></script>
+    <script type="text/javascript" src="/js/vue.js"></script>
+    <script type="text/javascript" src="/js/petsgram.js"></script>
+    <script type="text/javascript" src="/js/bootbox.min.js"></script>
+    <style>
+        body {
+            background-size: 50%;
+        }
+    </style>
+</head>
+<body>
+    <!--登录界面的容器-->
+    <div class="container-fluid">
+        <div class="row">
+            <!--左边的图片-->
+            <div class="col-6" style="padding-left: 0px; padding-right: 0px; margin-right: 0px">
+                <img src="/img/login.jpg" width="100%">
+            </div>
+
+            <!--右边 -->
+            <div class="col-6" style="padding-left: 130px; user-select:none;">
+                <!--logo-->
+                <div class="row" style="padding-left: 150px; user-select:none;">
+                    <img src="/img/logo.png">
+                </div>
+                <!--登录-->
+                <div class="row" style="padding-left: 50px">
+                    <div>
+                        <!--用户名、密码输入框-->
+                        <div class="form-row">
+                        <div class="form-group col-md-12" style="user-select:none;">
+                            <label for="inputUsername">用户名</label>
+                            <input type="username" class="form-control" id="inputUsername" placeholder="请输入用户名">
+                        </div>
+                            <div class="form-group col-md-12">
+                                <label for="inputPassword" style="user-select:none;">密码</label>
+                                <input type="password" class="form-control" id="inputPassword" placeholder="请输入密码">
+                            </div>
+                        </div>
+                        <!--验证码-->
+                        <div class="row" style="margin-top: 10px; margin-bottom: 10px">
+                            <label for="logincode" class="col-4" style="user-select:none;">图片验证码：</label>
+                            <input type="text" id="logincode" class="form-control col-5" placeholder="请输入右侧的验证码"/>
+                            <img src="/vcode" id="vcode" class="col-3" onclick="handleReload()"/>
+                        </div>
+                        <!--登录-->
+                        <div class="row">
+                            <div class="col-4">
+                                <button type="submit" class="btn btn-primary" onclick="doLog()">登录</button>
+                            </div>
+                            <div class="col-2" style="padding-left: 0px; margin-top: 10px">
+                                <a href="/register">注册</a>
+                            </div>
+<!--                            <div class="col-6" style="padding-left: 0px; margin-top: 10px">-->
+<!--                                <a href="#">忘记密码？</a>-->
+<!--                            </div>-->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+<script>
+
+</script>
+</body>
+</html>

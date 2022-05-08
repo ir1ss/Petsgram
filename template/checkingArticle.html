@@ -1,0 +1,136 @@
+{% extends 'base.html' %}
+{% block content %}
+<!--文章-->
+    <div class="col-12" style="padding-left: 0; padding-right: 0; padding-top: 12px; padding-bottom: 50px;">
+                <!--文章本身-->
+                <div class="col-12 row article-detail">
+                    <!--标题-->
+                    <div class="col-8 title">
+                    {{article.headline}}
+                    </div>
+                    <div class="col-2 favorite" id="delete">
+                        <label class="likeButton" onclick="handleGood('{{article.articleid}}')" value="flag"><img src="/img/good.svg" width="32" height="22">审核通过</label>
+                    </div>
+                    <div class="col-2 favorite" id="good">
+                        <label class="likeButton" onclick="handleDelete('{{article.articleid}}')" value="flag"><img src="/img/delete.svg" width="32" height="22">审核不通过</label>
+                    </div>
+                    <!--文章信息-->
+                    <div class="col-12 info">
+                        作者:{{user.username}}
+                        &nbsp;&nbsp;&nbsp;类别:{{article_type[article.type]}}&nbsp;&nbsp;&nbsp;
+                        上传日期:{{article.uploadtime}}&nbsp;&nbsp;&nbsp;
+                    </div>
+
+                    <!--文章内容-->
+                    <div class="col-12 content" id="content" style="min-height: 600px">
+                        {{article.content | safe}}
+                    </div>
+                </div>
+            </div>
+<script>
+    function readAll() {
+        let param = 'articleid={{article.articleid}}&position={{position}}'
+        $.post('/readall', param, function (data) {
+            if (data == 'credit-not-enough') {
+                bootbox.alert({title:"错误提示", message:"您的积分不足."});
+            } else{
+                $("#content").append(data);
+                $(".readall").hide();
+            }
+        })
+    }
+
+    function handleLike() {
+        let param = 'articleid={{article.articleid}}';
+        if ($(".likeButton").html() == '<img src="/img/star.svg" width="32" height="22">收藏') {
+             $.post('/like', param, function (data) {
+                if (data=='favorite-pass') {
+                    $(".likeButton").html('<img src="/img/star-fill.svg" width="32" height="22">已收藏');
+                } else {
+                    bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."});
+                }
+            })
+        } else {
+             $.post('/canclelike', param, function (data) {
+                if (data=='cancel-pass') {
+                    $(".likeButton").html('<img src="/img/star.svg" width="32" height="22">收藏');
+                } else {
+                    bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."});
+                }
+            })
+        }
+    }
+
+    function addComment(articleid) {
+        let content = $.trim($('#comment').val());
+        console.log(content);
+        if (content.length < 5 || content.length > 1000) {
+            bootbox.alert({title:"错误提示", message:"评论字数应在5-1000字内."});
+            return false;
+        }
+        let param = 'articleid=' + articleid + '&content=' + content;
+        $.post('/comment', param, function (data) {
+            console.log(data)
+            if (data == 'content-invalid') {
+                bootbox.alert({title:"错误提示", message:"评论字数应在5-1000字内."});
+            } else if (data == 'add-limit') {
+                bootbox.alert({title:"错误提示", message:"评论次数已达上限."});
+            } else if (data == 'add-fail') {
+                bootbox.alert({title:"错误提示", message:"未知错误，请联系管理员."})
+            } else if (data == 'add-pass') {
+                bootbox.alert({title:"提示", message:"评论成功，积分+2！"});
+                setTimeout("location.reload();", 1000);
+            } else if (data == 'admin-add-pass') {
+                bootbox.alert({title:"提示", message:"评论成功！"});
+                setTimeout("location.reload();", 1000);
+            }
+        })
+    }
+
+    function handleAgree(obj, commentid) {
+        param = "commentid=" + commentid;
+        $.post('/agree', param, function (data) {
+            if(data == 'agree-pass'){
+                let element = $(obj).children('span').eq(1);
+                let count = parseInt(element.text());
+                element.text(count+1);
+            }
+        })
+    }
+
+    function handleDisagree(obj, commentid) {
+        param = "commentid=" + commentid;
+        $.post('/disagree', param, function (data) {
+            if(data == 'disagree-pass'){
+                let element = $(obj).children('span').eq(1);
+                let count = parseInt(element.text());
+                element.text(count+1);
+            }
+        })
+    }
+
+    function handleHide(commentid) {
+        param = "commentid=" + commentid;
+        $.post('/hideComment', param, function (data) {
+            location.reload();
+        })
+    }
+
+    function handleGood (articleid) {
+        param = "articleid=" + articleid;
+        $.post('/uploadChecking', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/userpage/myCheckings';", 1000);
+        })
+    }
+
+    function handleDelete (articleid) {
+        param = "articleid=" + articleid;
+        console.log(param);
+        $.post('/deleteArticle', param, function (data) {
+            bootbox.alert({title:"信息提示", message:"操作成功！"});
+            setTimeout("location.href = '/userpage/myCheckings';", 1000);
+        })
+    }
+</script>
+{% endblock %}

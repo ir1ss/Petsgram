@@ -1,0 +1,32 @@
+<!--侧边栏-->
+<div class="col-3" style="border: none; padding-right: 0px;">
+    <!--推荐栏部分 -->
+    <div class="side">
+        <div class="col-12 tip">文章分类</div>
+        <ul class="list-group" style="padding-left: 0px">
+            {% for k, v in article_type.items() %}
+            <li class="list-group-item" style="margin-left: 0px"><a href="/type/{{k}}-1">{{v}}</a></li>
+            {% endfor %}
+        </ul>
+
+    </div>
+
+    <div class="side">
+        <div class="col-12 tip">最多收藏</div>
+        <ul>
+            {% for i in likes %}
+            <li><a href="/article/{{i[0]}}">{{loop.index}}.{{i[1] | truncate(18)}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <div class="side">
+        <div class="col-12 tip">最多阅读</div>
+        <ul>
+            {% for i in view %}
+            <li><a href="/article/{{i[0]}}">{{loop.index}}.{{i[1] | truncate(18)}}</a></li>
+            {% endfor %}
+        </ul>
+    </div>
+
+</div>

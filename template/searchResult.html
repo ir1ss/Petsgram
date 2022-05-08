@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% block content %}
+<div class="col-9" style="padding-left: 0; padding-right: 0; padding-top: 12px; padding-bottom: 50px">
+    <!--文章-->
+    {% for article, users in result %}
+    <div class="card mb-3" style="max-width: 1800px;">
+      <div class="row no-gutters">
+        <div class="col-md-4">
+          <a href="#"><img src="/img/{{article.thumbnail}}" alt="..."></a>
+        </div>
+        <div class="col-md-8">
+          <div class="card-body">
+            <a href="/article/{{article.articleid}}"><h5 class="card-title">{{article.headline | truncate(20)}}</h5></a>
+            <div class="row">
+              <div class="col-4"><p>作者：{{users.username}}</p></div>
+              <div class="col-8"><p class="card-text"><small class="text-muted">文章类型：{{article_type[article.type]}}</small></p></div>
+            </div>
+            <a href="/article/{{article.articleid}}">
+              <p class="card-text">
+                {{article.content | striptags | truncate(100)}}
+              </p>
+            </a>
+            <p class="card-text"><small class="text-muted">发布时间: {{article.uploadtime}}&nbsp;&nbsp;&nbsp;&nbsp;阅读次数：{{article.readcount}}&nbsp;&nbsp;&nbsp;&nbsp;所需积分：{{article.credit}}</small></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+
+  <!--分页-->
+  {% if total != 0 %}
+    <nav aria-label="Page navigation example"">
+      <ul class="pagination">
+        <li class="page-item">
+          {% if page!=1 %}
+          <a class="page-link" href="/search/{{page}}-{{keyword}}" aria-label="Previous">
+            <span aria-hidden="true">&laquo;</span>
+          </a>
+          {% endif %}
+        </li>
+        {% for i in range(total) %}
+        <li class="page-item"><a class="page-link" href="/search/{{i+1}}-{{keyword}}">{{i+1}}</a></li>
+        {% endfor %}
+        <li class="page-item">
+          {% if page!=total %}
+          <a class="page-link" href="/search/{{page+1}}-{{keyword}}" aria-label="Next">
+            <span aria-hidden="true">&raquo;</span>
+          </a>
+          {% endif %}
+        </li>
+      </ul>
+    </nav>
+  {% else %}
+  <div class="row" style="height: 100px; background-color: #FFFFFF; margin-right: 20px">
+    <div style="margin-left: 60px; margin-top: 30px"><h3>未找到您要的文章.</h3></div>
+  </div>
+  {% endif %}
+</div>
+
+{% include 'side.html' %}
+
+{% endblock %}
